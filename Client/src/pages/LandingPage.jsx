@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import toast from "react-hot-toast";
 import instance from "../lib/axios";
 import Footer from '../components/Footer';
+import NewsTicker from '../components/NewsTicker';
 
 export default function LandingPage() {
   const { user, isAuthenticated, isLoading, loginWithPopup } = useAuth0();
@@ -199,33 +200,36 @@ export default function LandingPage() {
           }
         `}
       </style>
-      <header className="flex flex-col sm:flex-row justify-between items-center px-4 sm:px-10 lg:px-16 py-3 sm:py-6 bg-gray-100 shadow-sm">
-        <div className="flex items-center justify-between w-full sm:w-auto">
-          <div onClick={() => navigate('/')} className="flex flex-col items-center font-bold text-lg max-w-[200px] overflow-hidden whitespace-nowrap cursor-pointer">
-            <img
-              src="/logo.png"
-              alt="FinEd logo"
-              className="h-12 sm:h-14 w-auto object-contain"
-            />
-            <span className='text-[#4100bc] text-[10px] -mt-2' >Beta</span>
+      <header className="flex flex-col px-4 sm:px-10 lg:px-16 py-3 sm:py-6 bg-gray-100 shadow-sm">
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full mb-4 sm:mb-6">
+          <div className="flex items-center justify-between w-full sm:w-auto">
+            <div onClick={() => navigate('/')} className="flex flex-col items-center font-bold text-lg max-w-[200px] overflow-hidden whitespace-nowrap cursor-pointer">
+              <img
+                src="/logo.png"
+                alt="FinEd logo"
+                className="h-12 sm:h-14 w-auto object-contain"
+              />
+              <span className='text-[#4100bc] text-[10px] -mt-2' >Beta</span>
+            </div>
+            <button
+              className="sm:hidden text-gray-800 focus:outline-none p-2"
+              onClick={toggleSidebar}
+              aria-label="Toggle menu"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+              </svg>
+            </button>
           </div>
-          <button
-            className="sm:hidden text-gray-800 focus:outline-none p-2"
-            onClick={toggleSidebar}
-            aria-label="Toggle menu"
-          >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
-            </svg>
-          </button>
+          <nav role="navigation" aria-label="Main navigation" className="hidden sm:flex flex-wrap items-center justify-center sm:justify-end gap-6 sm:gap-10">
+            <Link to="/courses" aria-label="View courses" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">Courses</Link>
+            <Link to="/articles" aria-label="View articles" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">Articles</Link>
+            <Link to="/about" aria-label="About us" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">About Us</Link>
+            <button onClick={loginWithPopup} className="px-5 py-2 bg-amber-400 text-white rounded-md   font-bold hover:bg-amber-500 transition-colors duration-200 text-base sm:text-lg cursor-pointer">Sign up / Login</button>
+          </nav>
         </div>
-        <nav role="navigation" aria-label="Main navigation" className="hidden sm:flex flex-wrap items-center justify-center sm:justify-end gap-6 sm:gap-10">
-          <Link to="/courses" aria-label="View courses" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">Courses</Link>
-          <Link to="/articles" aria-label="View articles" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">Articles</Link>
-          <Link to="/about" aria-label="About us" className="text-gray-800 font-medium hover:text-blue-700 transition-colors duration-200 text-base sm:text-lg">About Us</Link>
-          <button onClick={loginWithPopup} className="px-5 py-2 bg-amber-400 text-white rounded-md   font-bold hover:bg-amber-500 transition-colors duration-200 text-base sm:text-lg cursor-pointer">Sign up / Login</button>
-        </nav>
       </header>
+      <NewsTicker />
 
       <div className={`fixed inset-y-0 left-0 w-64 bg-gray-100 shadow-lg transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out sm:hidden z-50`}>
         <div className="flex justify-between items-center p-5 border-b">
@@ -473,7 +477,6 @@ export default function LandingPage() {
       )}
 
       <Footer />
-
     </div>
   );
 }

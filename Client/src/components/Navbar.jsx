@@ -5,6 +5,7 @@ import instance from '../lib/axios'
 import toast from 'react-hot-toast'
 import { FiMenu, FiX } from "react-icons/fi"
 import { MdLogout } from "react-icons/md"
+import NewsTicker from './NewsTicker'
 
 export default function Navbar() {
 
@@ -49,7 +50,7 @@ export default function Navbar() {
     return (
         <div>
             {isAuthenticated ?
-                <header className="flex flex-col md:flex-row md:items-center h-auto md:h-[63px] bg-gray-100 box-border mb-4">
+                <header className="flex flex-col bg-gray-100 box-border mb-4">
                     {/* Mobile and Tablet Header */}
                     <div className="flex justify-between items-center w-full mt-4 xl:hidden px-4">
                         <div onClick={() => navigate('/')} className="flex flex-col items-center font-bold text-lg max-w-[180px] overflow-hidden whitespace-nowrap cursor-pointer">
@@ -70,127 +71,130 @@ export default function Navbar() {
                     </div>
 
                     {/* Desktop Header */}
-                    <div className="hidden xl:flex xl:flex-row xl:items-center w-full mt-8 px-10 justify-between">
-                        <div onClick={() => navigate('/home')} className="flex flex-col items-center font-bold text-lg w-32 max-w-[180px] overflow-hidden whitespace-nowrap cursor-pointer">
-                            <img src="/logo.png" alt="FinEd Logo" className="h-[60px] w-auto object-contain rounded-b-md" />
-                            <span className='text-[#4100bc] text-[10px] -mt-2' >Beta</span>
-                        </div>
-                        <nav className="flex flex-wrap justify-center gap-5">
-                            <button
-                                className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname === '/home' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => navigate('/home')}
-                            >
-                                Home
-                            </button>
-                            <button
-                                className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname.startsWith('/courses') ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => navigate('/courses')}
-                            >
-                                Courses
-                            </button>
-                            <button
-                                className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname === '/articles' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => navigate('/articles')}
-                            >
-                                Articles
-                            </button>
-                            <button
-                                className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname.startsWith('/fin-tools') ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => navigate('/fin-tools')}
-                            >
-                                FinTools
-                            </button>
-                            {role === "Admin" && (
-                                <button
-                                    className={`px-6 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors ${location.pathname === '/admin' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                    onClick={() => navigate('/admin')}
-                                >
-                                    Admin Dashboard
-                                </button>
-                            )}
-                        </nav>
-                        <div className='flex items-center gap-4' >
-                            <div className='h-12 w-12 rounded-full bg-white flex justify-center items-center hover:bg-gray-200 transition-all duration-200 shadow-sm cursor-pointer' >
-                                <MdLogout
-                                    title='Log out'
-                                    className={`text-2xl`}
-                                    onClick={() => {
-                                        sessionStorage.setItem("forceReload", "true");
-                                        logout({ logoutParams: { returnTo: window.location.origin } })
-                                    }}
-                                />
+                    <div className="hidden xl:flex xl:flex-col items-center w-full mt-8 px-10">
+                        <div className="flex xl:flex-row xl:items-center w-full justify-between mb-4">
+                            <div onClick={() => navigate('/home')} className="flex flex-col items-center font-bold text-lg w-32 max-w-[180px] overflow-hidden whitespace-nowrap cursor-pointer">
+                                <img src="/logo.png" alt="FinEd Logo" className="h-[60px] w-auto object-contain rounded-b-md" />
+                                <span className='text-[#4100bc] text-[10px] -mt-2' >Beta</span>
                             </div>
-                            <div onClick={() => navigate("/notifications")} className="relative bg-white rounded-full p-3 shadow-sm cursor-pointer">
-                                <img src="/bell.png" alt="Bell Icon" width="24" />
-                                {hasUnseen && (
-                                    <div className="absolute top-0 right-1 w-3 h-3 bg-amber-400 rounded-full" />
+                            <nav className="flex flex-wrap justify-center gap-5">
+                                <button
+                                    className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname === '/home' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => navigate('/home')}
+                                >
+                                    Home
+                                </button>
+                                <button
+                                    className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname.startsWith('/courses') ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => navigate('/courses')}
+                                >
+                                    Courses
+                                </button>
+                                <button
+                                    className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname === '/articles' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => navigate('/articles')}
+                                >
+                                    Articles
+                                </button>
+                                <button
+                                    className={`w-28 h-10 text-base border-none rounded-full cursor-pointer shadow-sm font-medium transition-colors ${location.pathname.startsWith('/fin-tools') ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => navigate('/fin-tools')}
+                                >
+                                    FinTools
+                                </button>
+                                {role === "Admin" && (
+                                    <button
+                                        className={`px-6 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors ${location.pathname === '/admin' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                        onClick={() => navigate('/admin')}
+                                    >
+                                        Admin Dashboard
+                                    </button>
                                 )}
+                            </nav>
+                            <div className='flex items-center gap-4' >
+                                <div className='h-12 w-12 rounded-full bg-white flex justify-center items-center hover:bg-gray-200 transition-all duration-200 shadow-sm cursor-pointer' >
+                                    <MdLogout
+                                        title='Log out'
+                                        className={`text-2xl`}
+                                        onClick={() => {
+                                            sessionStorage.setItem("forceReload", "true");
+                                            logout({ logoutParams: { returnTo: window.location.origin } })
+                                        }}
+                                    />
+                                </div>
+                                <div onClick={() => navigate("/notifications")} className="relative bg-white rounded-full p-3 shadow-sm cursor-pointer">
+                                    <img src="/bell.png" alt="Bell Icon" width="24" />
+                                    {hasUnseen && (
+                                        <div className="absolute top-0 right-1 w-3 h-3 bg-amber-400 rounded-full" />
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Sidebar for mobile and tablet */}
-                    <div
-                        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 z-50 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} xl:hidden`}
-                    >
-                        <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                            <h2 className="text-lg font-bold">Menu</h2>
-                            <button onClick={toggleSidebar} className="text-2xl">
-                                <FiX />
-                            </button>
-                        </div>
-                        <nav className="flex flex-col p-4 gap-2">
-                            <button
-                                className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/home' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => { navigate('/home'); setIsSidebarOpen(false); }}
-                            >
-                                Home
-                            </button>
-                            <button
-                                className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/courses' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => { navigate('/courses'); setIsSidebarOpen(false); }}
-                            >
-                                Courses
-                            </button>
-                            <button
-                                className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/articles' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => { navigate('/articles'); setIsSidebarOpen(false); }}
-                            >
-                                Articles
-                            </button>
-                            <button
-                                className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/fin-tools' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                onClick={() => { navigate('/fin-tools'); setIsSidebarOpen(false); }}
-                            >
-                                FinTools
-                            </button>
-                            {role === "Admin" && (
-                                <button
-                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/admin' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
-                                    onClick={() => { navigate('/admin'); setIsSidebarOpen(false); }}
-                                >
-                                    Admin Dashboard
+                        {/* Sidebar for mobile and tablet */}
+                        <div
+                            className={`fixed top-0 left-0 h-full w-64 bg-white shadow-xl transform transition-transform duration-300 z-50 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} xl:hidden`}
+                        >
+                            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                                <h2 className="text-lg font-bold">Menu</h2>
+                                <button onClick={toggleSidebar} className="text-2xl">
+                                    <FiX />
                                 </button>
-                            )}
-                            <button
-                                className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left bg-white text-gray-700 hover:bg-gray-200`}
-                                onClick={() => {
-                                    logout({ logoutParams: { returnTo: window.location.origin } });
-                                    setIsSidebarOpen(false);
-                                }}
-                            >
-                                LogOut
-                            </button>
-                        </nav>
-                    </div>
-                    {
-                        isSidebarOpen && (
-                            <div
-                                className="fixed inset-0 bg-black/50 z-40"
-                                onClick={toggleSidebar}
-                            ></div>
-                        )
-                    }
+                            </div>
+                            <nav className="flex flex-col p-4 gap-2">
+                                <button
+                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/home' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => { navigate('/home'); setIsSidebarOpen(false); }}
+                                >
+                                    Home
+                                </button>
+                                <button
+                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/courses' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => { navigate('/courses'); setIsSidebarOpen(false); }}
+                                >
+                                    Courses
+                                </button>
+                                <button
+                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/articles' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => { navigate('/articles'); setIsSidebarOpen(false); }}
+                                >
+                                    Articles
+                                </button>
+                                <button
+                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/fin-tools' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                    onClick={() => { navigate('/fin-tools'); setIsSidebarOpen(false); }}
+                                >
+                                    FinTools
+                                </button>
+                                {role === "Admin" && (
+                                    <button
+                                        className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left ${location.pathname === '/admin' ? 'bg-amber-400 text-white' : 'bg-white text-gray-700 hover:bg-gray-200'}`}
+                                        onClick={() => { navigate('/admin'); setIsSidebarOpen(false); }}
+                                    >
+                                        Admin Dashboard
+                                    </button>
+                                )}
+                                <button
+                                    className={`px-4 py-2 text-base border-none rounded-full cursor-pointer font-medium transition-colors text-left bg-white text-gray-700 hover:bg-gray-200`}
+                                    onClick={() => {
+                                        logout({ logoutParams: { returnTo: window.location.origin } });
+                                        setIsSidebarOpen(false);
+                                    }}
+                                >
+                                    LogOut
+                                </button>
+                            </nav>
+                        </div>
+                        {
+                            isSidebarOpen && (
+                                <div
+                                    className="fixed inset-0 bg-black/50 z-40"
+                                    onClick={toggleSidebar}
+                                ></div>
+                            )
+                        }
+                        <NewsTicker />
                 </header>
                 :
                 <div>
@@ -221,6 +225,7 @@ export default function Navbar() {
                             <button onClick={loginWithPopup} className="px-5 py-2 bg-amber-400 text-white rounded-md font-bold hover:bg-amber-500 transition-colors duration-200 text-base sm:text-lg cursor-pointer">Sign up / Login</button>
                         </nav>
                     </header>
+                    <NewsTicker />
                     <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out sm:hidden z-50`}>
                         <div className="flex justify-between items-center p-5 border-b">
                             <span className="font-bold text-lg">Menu</span>

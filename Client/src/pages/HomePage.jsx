@@ -7,6 +7,7 @@ import FinScoreChart from '../components/finScoreChart'
 import { IoIosInformationCircleOutline } from "react-icons/io"
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import NewsTicker from '../components/NewsTicker'
 
 const HomePage = () => {
 
@@ -357,8 +358,8 @@ const HomePage = () => {
                           <img src={scheme?.bank_name === "HDFC Bank" ? "/hdfc.png" : scheme?.bank_name === "SBI Bank" ? "/sbi.png" : scheme?.bank_name === "ICICI Bank" ? "/icici.png" : "/kotak.png"} alt='bank_logo' className='h-9 w-9 sm:h-12 sm:w-12' />
                         </div>
                         <div>
-                        <p className="text-sm sm:text-base font-semibold">{scheme?.bank_name} {scheme?.scheme_name}</p>
-                        <p className="text-sm">{scheme?.description.slice(0,40)}...</p>
+                          <p className="text-sm sm:text-base font-semibold">{scheme?.bank_name} {scheme?.scheme_name}</p>
+                          <p className="text-sm">{scheme?.description.slice(0, 40)}...</p>
                         </div>
                       </div>
                     ))}
@@ -387,10 +388,9 @@ const HomePage = () => {
               </section>
             </div>
           </div>
+          <Footer />
         </div>
       )}
-
-      <Footer />
 
       {
         warning && (

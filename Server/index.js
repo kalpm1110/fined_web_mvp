@@ -10,6 +10,7 @@ import cardsRouter from './routes/cards.js';
 import articleRouter from './routes/articles.js';
 import exptrackerRouter from './routes/expenseTracker.js';
 import contactRouter from './routes/contact.js';
+import newsRouter from './routes/news.js';
 
 import router from './routes/sbiRoutes.js';
 import kotakrouter from './routes/kotakRoutes.js';
@@ -40,11 +41,12 @@ app.use('/api/cards', cardsRouter);
 app.use('/api/articles', articleRouter);
 app.use('/api/fin-tools/expensetracker', exptrackerRouter);
 app.use('/api/contact', contactRouter);
+app.use('/api/news', newsRouter);
 
 app.use('/api/sbi', router);
-app.use('/api/kotak',kotakrouter);
-app.use('/api/hdfc',hdfcrouter);
-app.use('/api/icici',icicirouter);
+app.use('/api/kotak', kotakrouter);
+app.use('/api/hdfc', hdfcrouter);
+app.use('/api/icici', icicirouter);
 
 app.get('/', (req, res) => {
   console.log('Server is running');
